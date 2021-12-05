@@ -24,6 +24,9 @@ const train_data = [
     { input: [0, 3, 4, 3], output: { defend: 1 } },
     { input: [0, 2, 3, 3], output: { reload: 1 } },
     { input: [1, 2, 0, 2], output: { shot: 1 } },
+    { input: [0, 2, 1, 3], output: { reload: 1 } },
+    { input: [0, 2, 0, 1], output: { reload: 1 } },
+    { input: [1, 3, 0, 1], output: { shot: 1 } },
 ]
 
 function playGame() {
@@ -37,6 +40,17 @@ function playGame() {
                 src="https://unpkg.com/brain.js"
                 onLoad={() => {
                     console.log("Script carregado")
+                    setTimeout(() => {
+                        const count = document.getElementById("count").innerText
+                        const errorThresh = document.getElementById("error").innerText
+                        if(count == "0" || errorThresh == "NaN%") {
+                            document.getElementById("loading").remove()
+                            const error_msg = document.getElementById("load-error")
+                            error_msg.querySelector("p").innerText = "O treinamento da inteligência artificial não está acontecendo corretamente. Isso pode ser um sinal de problema de compatibilidade com o seu dispositivo ):"
+                            error_msg.hidden = false
+                        }
+                    }, 5000)
+
                     const options = {
                         iterations: 100000,
                         callback: logCallback,
@@ -64,8 +78,14 @@ function playGame() {
                     })
 
                     function logCallback(data) {
-                        document.getElementById("count").innerText = data.iterations
-                        document.getElementById("error").innerText = (data.error * 100).toFixed(2) + "%"
+                        const count = document.getElementById("count")
+                        const error = document.getElementById("error")
+                        if(count) {
+                            count.innerText = data.iterations
+                        }
+                        if(error) {
+                            error.innerText = (data.error * 100).toFixed(2) + "%"
+                        }
                     }
 
                     function initGame() {
@@ -283,8 +303,6 @@ function playGame() {
                         <button id="defend">Defender</button>
                         <button id="reload">Recarregar</button>
                     </div>
-                    <h3 id="ia-probs" hidden>Decisões da IA</h3>
-                    <ul id="probs"/>
                     <br />
                     <h3>Acontecimentos do jogo:</h3>
                     <div id="events" />
@@ -292,10 +310,13 @@ function playGame() {
                     <p>Munição: <span id="munition">0</span></p>
                     <p>Última ação: <span id="last-action">Nenhuma</span></p>
                     <p>Defendeu: <span id="defend-p">Não</span></p>
+                    <br />
                     <h3>Informações da IA</h3>
                     <p>Munição: <span id="munition-ia">0</span></p>
                     <p>Última ação: <span id="last-action-ia">Nenhuma</span></p>
                     <p>Defendeu: <span id="defend-ia">Não</span></p>
+                    <h4 id="ia-probs" hidden>Decisões da IA</h4>
+                    <ul id="probs"/>
                     <br />
                 </div>
                 <button id="reload-game" hidden style={{ margin: "auto" }}>jogar denovo</button>

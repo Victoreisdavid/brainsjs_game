@@ -42,7 +42,7 @@ nav a:first-of-type {
 header {
     width: 80%;
     margin: auto;
-    margin-top: 20px
+    margin-top: 12px
 }
 
 header > h1 {
@@ -50,7 +50,7 @@ header > h1 {
     font-weight: bold;
     color: var(--middle-blue);
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 header > p {
@@ -62,7 +62,7 @@ header > p {
 main {
     max-width: 900px;
     margin: auto;
-    margin-top: 12px;
+    margin-top: 7px;
     padding: 20px;
 }
 
@@ -147,6 +147,6 @@ button:hover {
     margin-bottom: 10px;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.5);
     padding: 23px;
-    height: 420px;
+    height: 320px;
     overflow-y: scroll;
 }
