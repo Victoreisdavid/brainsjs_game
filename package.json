@@ -1,0 +1,28 @@
+{
+  "name": "brainsjs_game",
+  "version": "1.0.0",
+  "description": "Um jogo simples com brainJS",
+  "main": "index.js",
+  "dependencies": {
+    "next": "^12.0.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "next-dev": "next dev",
+    "next-build": "next build",
+    "next-start": "next start -p $PORT"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victoreisdavid/brainsjs_game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Victoreisdavid/brainsjs_game/issues"
+  },
+  "homepage": "https://github.com/Victoreisdavid/brainsjs_game#readme"
+}
