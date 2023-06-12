@@ -11,23 +11,27 @@ const train_data = [
     { input: [0, 0, 1, 2], output: { reload: 1 } },
     { input: [1, 2, 0, 2], output: { shot: 1 } },
     { input: [0, 1, 1, 3], output: { defend: 1 } },
-    { input: [2, 3, 3, 3], output: { shot: 1 } },
-    { input: [4, 2, 2, 1], output: { defend: 1 } },
+    { input: [2, 3, 1, 3], output: { shot: 1 } },
+    { input: [2, 2, 2, 1], output: { reload: 1 } },
     { input: [3, 1, 2, 2], output: { shot: 1 } },
     { input: [2, 1, 2, 1], output: { shot: 1 } },
     { input: [0, 1, 3, 2], output: { defend: 1 } },
     { input: [1, 3, 1, 3], output: { shot: 1 } },
     { input: [1, 2, 0, 1], output: { defend: 1 } },
     { input: [1, 3, 1, 3], output: { shot: 1 } },
-    { input: [0, 1, 0, 1], output: { defend: 1 } },
+    { input: [0, 1, 0, 1], output: { reload: 1 } },
     { input: [0, 3, 1, 2], output: { shot: 1 } },
-    { input: [0, 3, 4, 3], output: { defend: 1 } },
-    { input: [0, 2, 3, 3], output: { reload: 1 } },
+    { input: [0, 1, 1, 3], output: { shot: 1 } },
+    { input: [0, 2, 0, 3], output: { reload: 1 } },
     { input: [1, 2, 0, 2], output: { shot: 1 } },
     { input: [0, 2, 1, 3], output: { reload: 1 } },
     { input: [0, 2, 0, 1], output: { reload: 1 } },
     { input: [1, 3, 0, 1], output: { shot: 1 } },
 ]
+
+function genRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 function playGame() {
     return (
@@ -41,7 +45,11 @@ function playGame() {
                 onLoad={() => {
                     console.log("Script carregado")
                     setTimeout(() => {
-                        const count = document.getElementById("count").innerText
+                        const count = document.getElementById("count")?.innerText
+
+                        if(!count) {
+                            return;
+                        }
                         const errorThresh = document.getElementById("error").innerText
                         if(count == "0" || errorThresh == "NaN%") {
                             document.getElementById("loading").remove()
@@ -52,15 +60,18 @@ function playGame() {
                     }, 5000)
 
                     const options = {
-                        iterations: 100000,
+                        iterations: 4000,
                         callback: logCallback,
                         errorThresh: 0.002,
                         learningRate: 0.1
                     }
+
+
                     const neural = new brain.NeuralNetwork({
-                        activation: 'tanh',
+                        activation: "tanh",
                         hiddenLayers: [14]
                     })
+
                     neural.trainAsync(train_data, options).then(() => {
                         setTimeout(() => {
                             document.getElementById("loading").style.textAlign = "center"
